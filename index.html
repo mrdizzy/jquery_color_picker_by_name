@@ -1,0 +1,108 @@
+<html>
+<style>
+#pick { width:25%;}
+.static_container { border:1px dashed black;margin:0 auto;}
+
+.colour_label_container { text-align:center;margin:0 auto;}
+.big_colour_square_frame { border:1px solid black; width:29px; height:29px;}
+.big_colour_square_swatch { width:25px; height:25px;margin:2px;}
+.container_to_fade_in { display:none; border:1px dotted black;position:absolute;}
+.small_swatch_frame { border:1px dotted black;display:inline-block;padding:5px;margin:5px; }
+.small_swatch { width:20px; height:20px; }
+.selected { border: 1px solid black;}
+
+</style>
+<script src="colours.js"></script>
+<script src="in_groups_of.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+
+<script type="text/template" id="template">
+<div style="padding:0.5em;position:relative;">
+  <!-- this is the container that actually fades in -->
+  <div class="container_to_fade_in">
+    <div class="colour_label_container">
+      <div class="big_colour_square_frame">
+        <div class="big_colour_square_swatch" style="background-color:red;"></div>
+      </div>
+    </div>
+    <span class="text_label_for_colour">Text label</span>     
+    <div>
+      <table>
+        <tr>
+          <td><div class="colour_index_left">&laquo;</div></td>
+          <td class="colour_grid_container"></td>          
+          <td><div class="colour_index_right">&raquo;</div></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  
+  <div class="static_container">
+    <div class="big_colour_square_frame">
+      <div class="big_colour_square_swatch" style="background-color:green"></div>
+    </div>
+  
+    <div><span class="text_label_for_colour">Text label</span></div>
+  </div>
+</div>
+</script>
+<div>
+<h1>Hello</h1>
+<div id="pick" style="border:1px solid black;"></div>
+</div>
+
+<script type="text/javascript">
+(function($) {
+  $.fn.colorPicker = function(options) {
+  var settings = $.extend({
+            colours_per_page         : 16,
+            colour_list        : colours,
+        }, options);
+    var pointer = 0;
+    this.append($('#template').html())
+    var that = this;
+    var colour_groups = inGroupsOf(Object.keys(settings.colour_list), settings.colours_per_page)
+    
+    var grid_container = this.find('.colour_grid_container');
+    renderGrid(grid_container, colour_groups[pointer])
+    this.find('.static_container .big_colour_square_swatch').mouseenter(function() {
+      that.find('.container_to_fade_in').fadeToggle();
+    })
+    this.find('.container_to_fade_in').mouseleave(function() {
+       that.find('.container_to_fade_in').fadeToggle();
+    })
+    
+    this.find('.colour_index_right').click(function() {
+      pointer = pointer+1;
+      renderGrid(grid_container, colour_groups[pointer])
+    })
+    
+  function renderGrid(grid_container, colours) {
+    var grid = []
+    colours.forEach(function(c) {
+      grid.push("<div class='small_swatch_frame'><div class='small_swatch' style='background-color:" + c + "'></div></div>")
+    })
+    grid_container.html(grid)
+    grid_container.find('.small_swatch_frame').mouseenter(function() {
+      var index = $(this).index();
+      current_colour = colour_groups[pointer][index];
+      
+      that.trigger('hover_colour', current_colour)
+      that.find('.big_colour_square_swatch').css("background-color", current_colour)
+      that.find('.text_label_for_colour').text(settings.colour_list[current_colour])
+    })
+  }
+  return this;
+  }
+  
+
+})(jQuery)
+
+$('#pick').colorPicker({colours_per_page: 25});
+$('#pick').on('hover_colour', function(colour, c) {
+  console.log(c)
+})
+</script>
+
+</html>
