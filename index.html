@@ -13,7 +13,6 @@
 
 </style>
 <script src="colours.js"></script>
-<script src="in_groups_of.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
 
@@ -54,6 +53,26 @@
 
 <script type="text/javascript">
 (function($) {
+
+    function inGroupsOf(arr, n){
+      var ret = [];
+      var group = [];
+      var len = arr.length;
+      var per = len * (n / len);
+
+      for (var i = 0; i < len; ++i) {
+        group.push(arr[i]);
+        if ((i + 1) % n == 0) {
+          ret.push(group);
+          group = [];
+        }
+      }
+      if (group.length) ret.push(group);
+      return ret;
+    };
+
+
+
   $.fn.colorPicker = function(options) {
   var settings = $.extend({
             colours_per_page         : 16,
