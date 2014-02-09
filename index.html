@@ -1,4 +1,5 @@
 <html>
+
 <style>
 #pick { width:25%;}
 .static_container { border:1px dashed black;margin:0 auto;}
@@ -11,7 +12,9 @@
 .small_swatch { width:20px; height:20px; }
 .selected { border: 1px solid black;}
 
-</style>
+</style><body>
+<div id="content"></div>
+</body>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
 
@@ -83,19 +86,35 @@
     var that = this;
     var colour_groups = inGroupsOf(Object.keys(settings.colour_list), settings.colours_per_page)
     
-    var grid_container = this.find('.colour_grid_container');
-    renderGrid(grid_container, colour_groups[pointer])
-    this.find('.static_container .big_colour_square_swatch').mouseenter(function() {
-      that.find('.container_to_fade_in').fadeToggle();
-    })
-    this.find('.container_to_fade_in').mouseleave(function() {
-       that.find('.container_to_fade_in').fadeToggle();
-    })
     
-    this.find('.colour_index_right').click(function() {
-      pointer = pointer+1;
-      renderGrid(grid_container, colour_groups[pointer])
-    })
+    
+    //static container
+    var $static_container = $('<div></div>').addClass('static_container')
+    
+    var $text_label_for_colour = $('<p>Text label</p>').addClass("text_label_for_colour")
+    var $big_colour_square_frame = $('<div></div>').addClass('big_colour_square_frame')
+    var $big_colour_square_swatch = $('<div></div>').css("background-color", "green").addClass('big_colour_square_swatch')
+    console.log($big_colour_square_swatch)
+    $big_colour_square_frame.append($big_colour_square_swatch)
+    $static_container.html($big_colour_square_frame);   
+    $static_container.append($text_label_for_colour);
+    
+    // container to fade in
+    var $container_to_fade_in = $static_container.clone()
+    $container_to_fade_in.attr('class', "container_to_fade_in").css({position:"absolute", display: "none" })
+    
+    var $table = $('<table><td>Hello</td></table>');
+    
+    // Wrapper
+    
+    var $wrapper = $('<div></div>').css({position:"relative"})
+    
+    $container_to_fade_in.append($table);
+    
+    $wrapper.append($static_container).append($container_to_fade_in)
+   
+   $('#content').html($wrapper)
+   console.log($wrapper.html())
     
   function renderGrid(grid_container, colours) {
     var grid = []
@@ -125,3 +144,18 @@ $('#pick').on('hover_colour', function(colour, c) {
 </script>
 
 </html>
+
+
+ var grid_container = this.find('.colour_grid_container');
+    renderGrid(grid_container, colour_groups[pointer])
+    this.find('.static_container .big_colour_square_swatch').mouseenter(function() {
+      that.find('.container_to_fade_in').fadeToggle();
+    })
+    this.find('.container_to_fade_in').mouseleave(function() {
+       that.find('.container_to_fade_in').fadeToggle();
+    })
+    
+    this.find('.colour_index_right').click(function() {
+      pointer = pointer+1;
+      renderGrid(grid_container, colour_groups[pointer])
+    })
