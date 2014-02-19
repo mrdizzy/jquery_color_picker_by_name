@@ -1,0 +1,35 @@
+<html>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<div style="width:50%;float:left;">
+<div style="width:30px;height:30px;background-color:red;position:absolute;"></div>
+<div style="width:50px;height:50px;background-color:green;position:absolute;"></div>
+</div>
+
+
+<div style="width:50%;float:right;">
+
+<div style="position:relative">
+
+	<div id="fade" style="margin-top:-50px;padding-top:50px;display:none;position:absolute;width:75%;background-color:white;border:1px solid black;left:-50%;">
+	<div style="display:inline-block;width:15px;height:15px;background-color:red;border:1px solid black;padding:5px;margin:5px;"></div> <div style="display:inline-block;width:15px;height:15px;background-color:pink;border:1px solid black;padding:5px;margin:5px;"></div> <div style="display:inline-block;width:15px;height:15px;background-color:purple;border:1px solid black;padding:5px;margin:5px;"></div> <div style="display:inline-block;width:15px;height:15px;background-color:orange;border:1px solid black;padding:5px;margin:5px;"></div></div>
+</div>
+	<div class="static" style="border:1px solid red;width:50%;position:absolute;padding-left:10px;">
+	
+		<div id="swatch" style="padding:0;margin:0;ngborder:1px solid black;width:30px;height:30px;background-color:green;"></div>
+	
+	</div>
+
+</div>
+</html>
+<script>
+$('#swatch').mouseenter(function() {
+	$('#fade').show();
+})
+$('#fade div').mouseenter(function() {
+	alert('this')	
+})
+$('#fade').mouseleave(function() {
+	$('#fade').hide();
+})
+</script>
