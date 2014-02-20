@@ -1,18 +1,37 @@
 <html>
 
 <style>
-#pick {  position:relative;width:30%;}
-p { margin:0;}
-.swatch_container { text-align:center;z-index:1;position:relative;}
+.swatch_container { text-align:center;}
 .static_container { border:1px solid transparent; border-bottom:0;background-color:white;}
-.big_colour_square_frame { display:inline-block; border:1px solid black; width:29px; height:29px; }
-.big_colour_square_swatch { width:25px; height:25px;margin:2px;}
 
-.container_to_fade_in { z-index:0; background-color:white;display:none; position:absolute;border:1px solid transparent;border-top:0;}
-.small_swatch_frame { border:1px dotted black;display:inline-block;padding:5px;margin:5px; }
+.big_colour_square_frame { cursor:pointer; display:inline-block; border:1px solid lightgrey; width:35px; height:35px; padding:2px;}
+.big_colour_square_swatch { width:30px; height:30px;margin:2px;}
+.text_label_for_colour { padding-top:0.25em;padding-bottom:0.25em;font:normal 1em Verdana;text-transform:uppercase;letter-spacing:0.05em;}
+
+.container_to_fade_in {background-color:white;display:none; position:absolute; border:1px solid transparent;border-top:0;z-index:1;}
+
+.small_swatch_frame { cursor:pointer;border:1px solid lightgrey;display:inline-block;padding:3px;margin:6px; }
 .small_swatch { width:20px; height:20px; }
+    .small_swatch_frame:hover { border-style:dotted;border-color:black;}
+    
 .selected { border: 1px solid black;}
-.container_selected { border-color:black;}
+.container_selected { border-color:black;border-style:dotted}
+table td { vertical-align:middle; text-align:center;}
+table .right, table .left { 
+    font:normal 3em "Courier New";
+    color:lightgrey;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor:pointer;
+}
+table .right:hover, table .left:hover { 
+    color:black;
+}
+td.swatch_cell { width:60%;}
 
 </style>
 
@@ -20,7 +39,8 @@ p { margin:0;}
 
 <body>
     <div id="content" style="background-color:lightgrey;">
-        <div id="pick"></div>
+        <div id="pick" style="width:50%"</div>
+        <div id="hello" style="width:50%;"></div>
         <div>Hello everyone!</div>
     </div>
 </body>
@@ -49,7 +69,7 @@ p { margin:0;}
   $.fn.colorPicker = function(options) {
   var that = this;
     var settings = $.extend({
-            colours_per_page: 25,
+            colours_per_page: 16,
             colour_list: colour_list,
         }, options);
     var pointer = 0;
@@ -57,7 +77,7 @@ p { margin:0;}
     
     //static container
     var $static_container = $('<div></div>').addClass('static_container')
-    var $text_label_for_colour = $('<p>Text label</p>').addClass("text_label_for_colour")
+    var $text_label_for_colour = $('<div>Text label</div>').addClass("text_label_for_colour")
     var $big_colour_square_frame = $('<div></div>').addClass('big_colour_square_frame')
     var $big_colour_square_swatch = $('<div></div>').css("background-color", "green").addClass('big_colour_square_swatch')
     
@@ -66,7 +86,7 @@ p { margin:0;}
     $swatch.append($big_colour_square_frame).append($text_label_for_colour)
     
     // container to fade in
-    var $container_to_fade_in = $static_container.clone().attr('class', "container_to_fade_in")
+    var $container_to_fade_in = $static_container.clone().addClass("container_to_fade_in")
     
     // compile containers
     $static_container.append($swatch)
@@ -74,10 +94,10 @@ p { margin:0;}
     // Colour grids
     var counter = 0;
     
-     var divs = []
+     var $divs = []
     colour_groups.forEach(function(colours) {
         var $div = $("<div></div>")
-        divs.push($div)
+        $divs.push($div)
         colours.forEach(function(colour) {
             $div.append("<div class='small_swatch_frame'><div class='small_swatch' style='background-color:" + colour + "'></div></div>")
         })
@@ -87,9 +107,11 @@ p { margin:0;}
         counter++
     })
     
-     var $table = $('<table></table>').prepend("<td class='left'>left</td>").append("<td>").append(divs).append("</td><td class='right'>right</td>")    
-   
-        $container_to_fade_in.append($table)
+     var $table = $('<table></table>').prepend("<td class='left'>&laquo</td>");
+     var $td = $('<td></td>').addClass("swatch_cell").html($divs)
+     $table.append($td).append("<td class='right'>&raquo;</td>")    
+
+    $container_to_fade_in.append($table)
         
     var $wrapper = $('<div></div>').append($static_container).append($container_to_fade_in)
     
@@ -108,33 +130,32 @@ p { margin:0;}
     
     // Enter big swatch    
     $big_colour_square_frame.mouseenter(function() {   
-        $static_container.toggleClass("container_selected")
-        $container_to_fade_in.toggleClass("container_selected")
+        $static_container.addClass("container_selected")
+        $container_to_fade_in.addClass("container_selected")
         $container_to_fade_in.fadeIn();
     })
     
     // Leave wrapper
-    $($wrapper).mouseleave(function() {  
-        $static_container.toggleClass("container_selected")
-        $container_to_fade_in.toggleClass("container_selected")  
+    $wrapper.mouseleave(function() {  
+        $static_container.removeClass("container_selected")
+        $container_to_fade_in.removeClass("container_selected")  
         $container_to_fade_in.fadeOut();
-    })
-   
+    })   
    
    // Navigate between palettes
    $(this).on('click', 'table .left', function() {
    if(pointer > 0) {
-         divs[pointer].hide();
+         $divs[pointer].hide();
        pointer = pointer -1;
-       divs[pointer].show();
+       $divs[pointer].show();
        }
    })
    
    $(this).on('click', 'table .right', function() {
-   if(pointer < divs.length + 1) {
-       divs[pointer].hide();
+   if(pointer < $divs.length + 1) {
+       $divs[pointer].hide();
        pointer = pointer + 1;
-       divs[pointer].show();
+       $divs[pointer].show();
        }
    })
    $(this).html($wrapper)
@@ -145,6 +166,7 @@ p { margin:0;}
 
 })(jQuery)
 $('#pick').colorPicker()
+
 </script>
 
 </html>
