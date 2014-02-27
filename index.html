@@ -11,9 +11,12 @@
     </div>
 </body>
 <script type="text/javascript">
-
+$(function() {
 $('#pick').colorPicker({default_color: '#f8d568'})
-
+$('#pick').on("hover_colour", function() {
+    console.log("Hello")
+})
+})
 </script>
 
 </html>

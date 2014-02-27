@@ -22,7 +22,7 @@
   $.fn.colorPicker = function(options) {
   var that = this;
     var settings = $.extend({
-            colours_per_page: 16,
+            colours_per_page: 40,
             colour_list: colour_list,
             default_color: '#cd5c5c'
         }, options);
@@ -37,7 +37,6 @@
         break;
       }
     }
-    alert(pointer)
     
     //static container
     var $static_container = $('<div></div>').addClass('dizzycp-static_container')
