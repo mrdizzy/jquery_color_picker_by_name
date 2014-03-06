@@ -37,8 +37,6 @@
         break;
       }
     }
-    alert(pointer)
-    
     //static container
     var $static_container = $('<div></div>').addClass('dizzycp-static_container')
     var $text_label_for_colour = $('<div>' + settings.colour_list[settings.default_color] + '</div>').addClass("dizzycp-text_label_for_colour")
@@ -88,8 +86,10 @@
     })      
     
     // Click on a swatch    
-    $wrapper.on('click', 'div.dizzycp-small_swatch_frame', function() {
-        $container_to_fade_in.fadeOut();
+    $wrapper.on('click', 'div.dizzycp-small_swatch_frame', function(e) {
+        var swatch = $(e.currentTarget)
+        swatch.css("border", "1px solid black;")
+        $container_to_fade_in.hide();
     })  
     
     // Enter big swatch    
@@ -116,7 +116,7 @@
    })
    
    $(this).on('click', '.dizzycp-right', function() {
-   if(pointer < $divs.length + 1) {
+   if(pointer < ($divs.length -1)) {
        $divs[pointer].hide();
        pointer = pointer + 1;
        $divs[pointer].show();
