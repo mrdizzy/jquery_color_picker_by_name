@@ -38,10 +38,6 @@
         break;
       }
     }
-<<<<<<< HEAD
-=======
-    
->>>>>>> cdb0e3a8adb77b06e52b03205a972e54a85f1bfc
     //static container
     var $static_container = $('<div></div>').addClass('dizzycp-static_container')
     var $text_label_for_colour = $('<div>' + settings.colour_list[settings.default_color] + '</div>').addClass("dizzycp-text_label_for_colour")
@@ -91,13 +87,8 @@
     })      
     
     // Click on a swatch    
-<<<<<<< HEAD
-    $wrapper.on('click', 'div.dizzycp-small_swatch_frame', function(e) {
-        var swatch = $(e.currentTarget)
-        swatch.css("border", "1px solid black;")
-=======
+
     $wrapper.on('click', 'div.dizzycp-small_swatch_frame', function() {
->>>>>>> cdb0e3a8adb77b06e52b03205a972e54a85f1bfc
         $container_to_fade_in.hide();
     })  
     
@@ -124,13 +115,8 @@
        }
    })
    
-<<<<<<< HEAD
-   $(this).on('click', '.dizzycp-right', function() {
-   if(pointer < ($divs.length -1)) {
-=======
  this.on('click', '.dizzycp-right', function() {
    if(pointer < $divs.length - 1) {
->>>>>>> cdb0e3a8adb77b06e52b03205a972e54a85f1bfc
        $divs[pointer].hide();
        pointer = pointer + 1;
        $divs[pointer].show();
