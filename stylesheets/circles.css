@@ -1,0 +1,36 @@
+
+.dizzycp-static_container { border:1px solid transparent; border-bottom:0;background-color:white;}
+.dizzycp-swatch_container { text-align:center;}
+
+/* Selected Swatch */
+.dizzycp-big_colour_square_frame { cursor:pointer; display:inline-block; border:1px solid lightgrey; width:38px; height:38px;  border-radius:19px;}
+.dizzycp-big_colour_square_swatch { width:32px; height:32px;margin:3px; border-radius:16px;}
+.dizzycp-text_label_for_colour { padding-top:0.25em;padding-bottom:0.25em;font:normal 1em Verdana;text-transform:uppercase;letter-spacing:0.05em;}
+
+.dizzycp-container_to_fade_in {width:100%;background-color:white;display:none; position:absolute; border:1px solid transparent;border-top:0;z-index:1;}
+
+/* Palette swatches */
+.dizzycp-small_swatch_frame { cursor:pointer;border:1px solid lightgrey;display:inline-block;padding:3px;margin:6px; border-radius:15px;}
+.dizzycp-small_swatch { width:20px; height:20px; border-radius:10px; }
+    .dizzycp-small_swatch_frame:hover { border-style:dashed;border-color:black;}
+    
+.dizzycp-selected { border: 1px solid black;}
+.dizzycp-container_selected { border-color:black;border-style:dotted}
+table.dizzycp { width:100%;margin-top:1em;}
+table.dizzycp td { vertical-align:middle; text-align:center;}
+table.dizzycp .dizzycp-right, table.dizzycp .dizzycp-left { 
+text-align:center;
+width:25%;
+    font:normal 3em "Courier New";
+    color:lightgrey;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor:pointer;
+}
+table.dizzycp .dizzycp-right:hover, table.dizzycp .dizzycp-left:hover { 
+    color:black;
+}

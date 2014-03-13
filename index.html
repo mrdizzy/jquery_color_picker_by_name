@@ -1,22 +1,21 @@
 <html>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="color_picker.js"></script>
-<link rel="stylesheet" href="default.css" type="text/css"></link>
+<script src="colours.js"></script> <!-- Optional default list of colours, must come second -->
+<link rel="stylesheet" href="stylesheets/circles.css" type="text/css"></link>
 
 <body>
-    <div id="content" style="background-color:lightgrey;">
-        <div id="pick" style="width:50%"</div>
-        <div id="hello" style="width:50%;"></div>
-        <div>Hello everyone!</div>
-    </div>
+    <div id="pick" style="width:50%;"></div>
+    <div id="selected" style="margin-left:50%;"></div>
 </body>
 <script type="text/javascript">
-$(function() {
-$('#pick').colorPicker({default_color: '#f8d568'})
-$('#pick').on("hover_colour", function() {
-    console.log("Hello")
-})
-})
+    $(function() {
+        var $selected = $('#selected');
+        $('#pick').colorPicker({default_color: '#f8d568'})
+        $('#pick').on("dizzy-cp:hoverColor", function(event, colour) {
+            $selected.append("Emitted dizzy-cp:hoverColor event with hex code " + colour + "<br/>")
+        })
+    })
 </script>
 
 </html>
