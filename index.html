@@ -8,10 +8,11 @@
     <div id="pick" style="width:50%;"></div>
     <div id="selected" style="margin-left:50%;"></div>
 </body>
+
 <script type="text/javascript">
     $(function() {
         var $selected = $('#selected');
-        $('#pick').colorPicker({default_color: '#f8d568'})
+        $('#pick').colorPicker({default_color: '#f8d568', colours_per_page: 20, swatches_per_row: 5})
         $('#pick').on("dizzy-cp:hoverColor", function(event, colour) {
             $selected.append("Emitted dizzy-cp:hoverColor event with hex code " + colour + "<br/>")
         })

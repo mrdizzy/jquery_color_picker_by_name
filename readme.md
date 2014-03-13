@@ -1,34 +1,56 @@
-<html>
-<body>
-<p>If you want an absolutely positioned element to be positioned <i>relative</i> to its <i>parent</i>, then the <i>parent</i> needs to have <code>position: relative</code> set in its css. More information: 
-<ul>
-<li>
-<a href="http://css-tricks.com/absolute-positioning-inside-relative-positioning/">http://css-tricks.com/absolute-positioning-inside-relative-positioning</a></li>
-<li><a href="http://www.barelyfitz.com/screencast/html-training/css/positioning/">http://www.barelyfitz.com/screencast/html-training/css/positioning/</li>
-<li><a href="http://www.w3.org/TR/CSS21/visuren.html#comp-abspos">http://www.w3.org/TR/CSS21/visuren.html#comp-abspos</a></li>
-</ul>
+##Introduction
 
-<p>The abs-positioned elements are positioning themselves against the first ancestor not static postitioned, and there is none here, so they position against html (this can be seen by adding margin-top to body, and the Back-Home image is not moved).</p>
-<p>
-The containing block for a positioned box is established by the nearest positioned ancestor (or, if none exists, the initial containing block, as in our example).
+This swatch picker provides the following features:
 
-</p>
-<div style="width:50%;border:1px solid blue;height:50px;">This is a container without <code>position: relative</code>
-  <div style="position:absolute;width:60%;height:35px;border:1px solid green;">This is an absolutely positioned element inside the container. Its width is relative to the <i>window</i> rather than the parent container element.</div>
-</div>
+* Hover over a main colour swatch to bring up a grid containing a palette of colours
+* Change the main colour swatch by hovering over the smaller swatches in the grid. Each time you hover over a small swatch, an event will also be emitted with the hex code value of the swatch
+* Colour grids are paginated and sorted by hue
+* You can choose the number of swatches per grid (default is 16) and the number of swatches per row in the grid (default is 4)
+* Takes a simple array of hex codes, or if you wish to label the swatches with descriptive names such as "Olive", an object containing key-value pairs where the hex code is the key and the value is the label
+* Comes with a list of default colours
+* Customise the style of the swatches with CSS
+
+##Quick start
+First of all make sure you include jQuery before anything else:
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+
+Then include the stylesheets:
+
+    <link rel="stylesheet" href="/stylesheets/default.css" type="text/css">
+
+Then the color picker file itself:
+
+    <script src="http://www.dizzy.co.uk/javascripts/jquery.color_picker.min.js"></script>
 
 
-<div style="padding:50px;"></div>
-<div style="width:50%;border:1px solid blue;height:50px;">This is a container without <code>position: relative</code>
-  <div style="position:absolute;top:50px;right:50px;width:60%;height:35px;border:1px solid green;">This is an absolutely positioned element inside the container. Its width is relative to the <i>window</i> rather than the parent container element.</div>
-</div>
+Then if you wish to use the default colour list, please include it <i>after</i> the main colour picker file.
 
+    <script src="http://www.dizzy.co.uk/javascripts/colour_list.js"></script>
 
-<div style="padding:50px;"></div>
-<div style="position:relative;width:50%;border:1px solid blue;height:50px;">This is a container without <code>position: relative</code>
-  <div style="position:absolute;width:60%;height:35px;border:1px solid green;">This is an absolutely positioned element inside the container. Its width is relative to the <i>parent</i> rather than the window.</div>
-</div>
-</body>
+If you do not include the default colour list file, then you will need to pass a list of colours as an option. This can be either an array of hex codes:
 
-</html>
+    ["#83434", "#00000", "#00FF00"]
 
+or an object of key-value pairs:
+
+    { "#000000": "Black",
+      "#FFFFFF": "White }
+
+We then initialise the plugin on an element:</p>
+
+    $('#chosen_div').colorPicker({
+        default_selected_color: '#4b5320',
+        colours_per_grid: 16,
+        colours_per_row: 4,
+    });
+
+We can then listen for events on the element when colours are hovered over:</p>
+
+    $('#chosen_div").on("dizzy-cp:hoverColor", function(event, hexcode) {
+        console.log("Colour hexcode hovered is: " + hexcode);
+    })
+
+## Advanced
+
+Now...
